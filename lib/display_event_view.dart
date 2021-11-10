@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'display_event.dart';
 import 'envent_view.dart';
 
+RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
 class DisplayEventView extends StatelessWidget {
   final Widget child;
   final DisplayEvent controller;
@@ -14,13 +16,7 @@ class DisplayEventView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      EventView(callback: (isShow) {
-        if (isShow) {
-          controller.onDisplay();
-        } else {
-          controller.onHiden();
-        }
-      }),
+      EventView(callback: controller),
       child,
     ]);
   }

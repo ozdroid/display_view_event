@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-typedef DisplayCallback = void Function(bool);
+import 'display_event.dart';
 
 class EventView extends StatefulWidget {
-  final DisplayCallback callback;
+  final DisplayEvent? callback;
   const EventView({
     Key? key,
     required this.callback,
@@ -13,34 +13,56 @@ class EventView extends StatefulWidget {
   _TextViewItemState createState() => _TextViewItemState();
 }
 
-class _TextViewItemState extends State<EventView> with WidgetsBindingObserver {
+class _TextViewItemState extends State<EventView> implements RouteAware {
   @override
   void initState() {
     super.initState();
-    widget.callback(true);
-    print("initState");
-  }
+    if (widget.callback != null) {
+      widget.callback!.onDisplay();
+    }
 
-  @override
-  void activate() {
-    print("activate");
+    print("initState");
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    widget.callback(false);
+    if (widget.callback != null) {
+      widget.callback!.onHiden();
+    }
     print("deactivate");
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print("didChangeDependencies");
   }
 
   @override
   Widget build(BuildContext context) {
     return Container();
+  }
+
+  @override
+  void didPop() {
+    if (widget.callback != null) {
+      widget.callback!.didPop();
+    }
+  }
+
+  @override
+  void didPopNext() {
+    if (widget.callback != null) {
+      widget.callback!.didPopNext();
+    }
+  }
+
+  @override
+  void didPush() {
+    if (widget.callback != null) {
+      widget.callback!.didPush();
+    }
+  }
+
+  @override
+  void didPushNext() {
+    if (widget.callback != null) {
+      widget.callback!.didPushNext();
+    }
   }
 }
