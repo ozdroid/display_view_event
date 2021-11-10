@@ -18,12 +18,25 @@ class _TextViewItemState extends State<EventView> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     widget.callback(true);
+    print("initState");
+  }
+
+  @override
+  void activate() {
+    print("activate");
   }
 
   @override
   void deactivate() {
     super.deactivate();
     widget.callback(false);
+    print("deactivate");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("didChangeDependencies");
   }
 
   @override

@@ -1,6 +1,6 @@
 name: display_event_view
 description: View显示和隐藏的事件触发
-version: 0.0.1
+version: 0.0.2
 homepage:
 
 environment:
