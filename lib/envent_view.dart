@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'display_event.dart';
+import 'display_event_view.dart';
 
 class EventView extends StatefulWidget {
   final DisplayEvent? callback;
@@ -15,13 +16,23 @@ class EventView extends StatefulWidget {
 
 class _TextViewItemState extends State<EventView> implements RouteAware {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     if (widget.callback != null) {
       widget.callback!.onDisplay();
     }
-
-    print("initState");
   }
 
   @override
@@ -30,7 +41,6 @@ class _TextViewItemState extends State<EventView> implements RouteAware {
     if (widget.callback != null) {
       widget.callback!.onHiden();
     }
-    print("deactivate");
   }
 
   @override
